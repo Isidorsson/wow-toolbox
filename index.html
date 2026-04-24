@@ -3,104 +3,248 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Legal &amp; Policies — WoW Toolbox</title>
-  <meta name="description" content="Terms, Privacy, Refunds, and Contributor agreements for WoW Toolbox.">
-  <link rel="stylesheet" href="styles.css">
+  <title>WoW Toolbox — A desktop kit for 3.3.5a</title>
+  <meta name="description" content="WoW Toolbox is a desktop development kit for World of Warcraft 3.3.5a (WotLK). 30 editors, creators, and generators in one window. Works with TrinityCore and AzerothCore.">
+  <meta name="theme-color" content="#0a0c12">
+
+  <meta property="og:title" content="WoW Toolbox — A desktop kit for 3.3.5a">
+  <meta property="og:description" content="30 editors, creators, and generators for WotLK 3.3.5a. TrinityCore + AzerothCore ready.">
+  <meta property="og:image" content="images/toolbox-landing.png">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='72' font-size='80' text-anchor='middle' fill='%23d4af6a'%3E%E2%97%88%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="welcome.css">
 </head>
 <body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="site">
+    <a class="brand" href="./">
+      <span class="brand__mark" aria-hidden="true">◈</span>
+      <span class="brand__word">WoW Toolbox</span>
+      <span class="brand__tag">WotLK · 3.3.5a</span>
+    </a>
+    <nav class="site__nav" aria-label="Primary">
+      <a href="#toolkit">Toolkit</a>
+      <a href="#stack">Stack</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/Isidorsson/wow-toolbox" rel="noopener">GitHub</a>
+      <a href="legal.html" class="wip" title="Legal documents — still a work in progress">Legal <span class="wip__pill">WIP</span></a>
+    </nav>
+  </header>
+
   <main>
-    <header class="site">
-      <p class="eyebrow">WoW Toolbox</p>
-      <h1>Legal &amp; Policies</h1>
-      <p class="updated">Last updated: 2026-04-21</p>
-    </header>
+    <section class="hero">
+      <div class="hero__text">
+        <p class="eyebrow">Desktop kit · Electron + Rust · Windows · macOS · Linux</p>
+        <h1 class="hero__title">
+          A <em>codex</em> for<br>
+          the client<br>
+          <em>Blizzard forgot.</em>
+        </h1>
+        <p class="hero__lede">
+          Thirty editors, creators, and generators for World of Warcraft
+          <strong>3.3.5a</strong> — DBC parsing, live MySQL writes, 3D model
+          and map previews, an in-app shop, and a realtime changelog.
+          Core-agnostic where it can be; TrinityCore- and AzerothCore-aware where it has to.
+        </p>
+        <div class="cta-row">
+          <a href="https://github.com/Isidorsson/wow-toolbox/releases" class="cta cta--primary" id="cta-download">
+            <span class="cta__label">Download</span>
+            <span class="cta__detail" id="cta-version">checking…</span>
+          </a>
+          <a href="https://github.com/Isidorsson/wow-toolbox/releases" class="cta cta--ghost">All releases →</a>
+        </div>
+        <dl class="hero__meta" id="release-meta" aria-label="Latest release metadata">
+          <div><dt>Version</dt><dd data-field="version">—</dd></div>
+          <div><dt>Size</dt><dd data-field="size">—</dd></div>
+          <div><dt>Published</dt><dd data-field="date">—</dd></div>
+          <div><dt>Platform</dt><dd data-field="platform">Win&nbsp;x64</dd></div>
+        </dl>
+      </div>
 
-    <p>
-      This page is the central reference for the legal terms that govern your use of
-      <strong>WoW Toolbox</strong> — the desktop development kit for World of Warcraft 3.3.5a — and
-      any purchases, subscriptions, donations, or contributor payouts made through it. If you have
-      questions before you buy, please <a href="contact.html">contact us</a> first.
-    </p>
+      <figure class="hero__frame">
+        <div class="hero__sigil" aria-hidden="true"></div>
+        <div class="hero__label" aria-hidden="true">
+          <span>FIG.&nbsp;I</span>
+          <span>/&nbsp;The landing</span>
+        </div>
+        <img src="images/toolbox-landing.png" alt="WoW Toolbox landing screen: a grid of editors, creators, and generators." />
+        <figcaption>The hub. Every tool, two clicks from the cursor.</figcaption>
+      </figure>
+    </section>
 
-    <h2>Operator details</h2>
-    <div class="identity">
-      <dl>
-        <dt>Operating entity</dt><dd><span class="placeholder">[LEGAL_BUSINESS_NAME]</span></dd>
-        <dt>Trading as</dt><dd>WoW Toolbox</dd>
-        <dt>Registered address</dt><dd><span class="placeholder">[REGISTERED_ADDRESS]</span></dd>
-        <dt>Country</dt><dd>Sweden</dd>
-        <dt>Company / org. no.</dt><dd><span class="placeholder">[ORG_NUMBER]</span></dd>
-        <dt>VAT no.</dt><dd><span class="placeholder">[VAT_NUMBER]</span></dd>
-        <dt>Support email</dt><dd><span class="placeholder">[SUPPORT_EMAIL]</span></dd>
-      </dl>
-    </div>
+    <section class="marquee" aria-label="Included tools">
+      <div class="marquee__track">
+        <span>Achievement Editor</span><span>Talent Editor</span><span>Spell Editor</span><span>Quest Editor</span>
+        <span>Title Editor</span><span>Faction Editor</span><span>Creature Editor</span><span>Currency Editor</span>
+        <span>Icon Editor</span><span>SAI Editor</span><span>Taxi Path Editor</span><span>Map Editor</span>
+        <span>Dungeon Designer</span><span>World Event Designer</span><span>Custom Class Creator</span>
+        <span>Item Creator</span><span>Item Generator</span><span>NPC Generator</span><span>Loot Generator</span>
+        <span>Vendor Generator</span><span>Skill Line Manager</span><span>Teleport Manager</span>
+        <span>DBC Library</span><span>DBC Manager</span><span>SQL Query Builder</span><span>M2 Viewer</span>
+        <span>Map Asset Packer</span><span>Import / Export</span><span>AI Assistant</span><span>Shop</span>
+        <span aria-hidden="true">Achievement Editor</span><span aria-hidden="true">Talent Editor</span>
+        <span aria-hidden="true">Spell Editor</span><span aria-hidden="true">Quest Editor</span>
+        <span aria-hidden="true">Title Editor</span><span aria-hidden="true">Faction Editor</span>
+      </div>
+    </section>
 
-    <h2>What we sell</h2>
-    <p>WoW Toolbox uses Stripe to process the following types of payment:</p>
-    <ul>
-      <li>
-        <strong>One-time digital purchases</strong> — content packs, templates, and tool add-ons
-        delivered through the in-app Shop. These are licensed digital goods, not physical items.
-      </li>
-      <li>
-        <strong>Subscriptions</strong> — recurring monthly or yearly access to premium features or
-        content libraries. Subscriptions auto-renew until cancelled. See
-        <a href="subscriptions.html">Subscription Terms</a> for full disclosure.
-      </li>
-      <li>
-        <strong>Donations</strong> — voluntary, non-refundable contributions that support
-        development. Donations grant no goods, services, or equity.
-      </li>
-      <li>
-        <strong>Contributor payouts</strong> — community creators who submit content to the Shop
-        receive payouts via Stripe Connect. See the
-        <a href="creators.html">Contributor Agreement</a>.
-      </li>
-    </ul>
+    <section class="toolkit" id="toolkit">
+      <header class="section-head">
+        <p class="eyebrow">Chapter&nbsp;II · Six exhibits</p>
+        <h2>What&rsquo;s in <em>the window</em>.</h2>
+        <p class="section-head__lede">
+          Six snapshots out of thirty. Click a release in the Changelog and the
+          next launch pulls it automatically.
+        </p>
+      </header>
 
-    <h2>Documents</h2>
-    <ul class="doc-list">
-      <li>
-        <a href="terms.html">Terms of Service</a>
-        <span class="summary">Your licence to use the WoW Toolbox app, acceptable-use rules, IP ownership, disclaimers, and governing law.</span>
-      </li>
-      <li>
-        <a href="privacy.html">Privacy Policy</a>
-        <span class="summary">What personal data we collect, why we collect it, who we share it with, and your rights under GDPR / CCPA.</span>
-      </li>
-      <li>
-        <a href="refunds.html">Refund &amp; Cancellation Policy</a>
-        <span class="summary">When you can request a refund, how cancellations work, and the explicit non-refundable nature of donations.</span>
-      </li>
-      <li>
-        <a href="subscriptions.html">Subscription Terms</a>
-        <span class="summary">Auto-renewal disclosure, billing cycles, price changes, free-trial conversion, and how to cancel.</span>
-      </li>
-      <li>
-        <a href="creators.html">Contributor &amp; Creator Agreement</a>
-        <span class="summary">Terms for community creators who sell content or receive payouts via Stripe Connect.</span>
-      </li>
-      <li>
-        <a href="contact.html">Contact &amp; Customer Service</a>
-        <span class="summary">How to reach support, refund requests, and data-protection enquiries.</span>
-      </li>
-    </ul>
+      <article class="tool">
+        <div class="tool__num" aria-hidden="true">I</div>
+        <div class="tool__body">
+          <p class="eyebrow eyebrow--small">The Hub</p>
+          <h3>Editors &amp; Creators, by category.</h3>
+          <p>Achievements, Talents, Titles, Spells, Quests, Factions, Creatures, Currencies — plus the Skill Line Manager, Custom Class Creator, and an M2 Viewer. Each tool is a sandboxed feature module; the landing is the table of contents.</p>
+          <ul class="tool__tags"><li>DBC</li><li>MySQL</li><li>Sandboxed</li><li>30 tools</li></ul>
+        </div>
+        <figure class="tool__shot"><img src="images/toolbox-landing.png" alt="Landing grid with all tool categories" loading="lazy" decoding="async"></figure>
+      </article>
 
-    <div class="notice">
-      Payments are processed by <strong>Stripe</strong>. By submitting payment details, you also
-      agree to the applicable Stripe terms — for buyers, the
-      <a href="https://stripe.com/legal/end-users" rel="noopener">Stripe Services Agreement</a>;
-      for creators receiving payouts, the
-      <a href="https://stripe.com/connect-account/legal" rel="noopener">Stripe Connected Account Agreement</a>.
-    </div>
+      <article class="tool tool--reverse">
+        <div class="tool__num" aria-hidden="true">II</div>
+        <div class="tool__body">
+          <p class="eyebrow eyebrow--small">Realm discovery</p>
+          <h3>A server browser that edits <code>realmlist.wtf</code> so you don&rsquo;t.</h3>
+          <p>Discover, filter, and connect to 3.3.5a realms. Pin favourites, see latency, and swap realmlists on connect. Server operators can submit their own listing with a tagline, a flag, and a Discord invite.</p>
+          <ul class="tool__tags"><li>Realmlist</li><li>Latency</li><li>Submissions</li></ul>
+        </div>
+        <figure class="tool__shot"><img src="images/server-browser.png" alt="Server browser listing private WotLK servers" loading="lazy" decoding="async"></figure>
+      </article>
 
-    <footer class="site">
-      <p>
-        © <span class="placeholder">[YEAR]</span> <span class="placeholder">[LEGAL_BUSINESS_NAME]</span>.
-        WoW Toolbox is not affiliated with or endorsed by Blizzard Entertainment.
-        Project repository: <a href="https://github.com/Isidorsson/wow-toolbox">github.com/Isidorsson/wow-toolbox</a>.
-      </p>
-    </footer>
+      <article class="tool">
+        <div class="tool__num" aria-hidden="true">III</div>
+        <div class="tool__body">
+          <p class="eyebrow eyebrow--small">Content marketplace</p>
+          <h3>In-app Shop, Stripe-backed.</h3>
+          <p>Content packs, templates, and tool add-ons — versioned, licensed, and delivered over the wire. Payments run through Stripe; the app handles install, verification, and update notifications.</p>
+          <ul class="tool__tags"><li>Stripe</li><li>Licensed</li><li>Auto-install</li></ul>
+        </div>
+        <figure class="tool__shot"><img src="images/shop.png" alt="In-app Shop screen" loading="lazy" decoding="async"></figure>
+      </article>
+
+      <article class="tool tool--reverse">
+        <div class="tool__num" aria-hidden="true">IV</div>
+        <div class="tool__body">
+          <p class="eyebrow eyebrow--small">Community</p>
+          <h3>Creator uploads, front-of-house.</h3>
+          <p>Submissions from the community sit beside the featured catalogue. Preview before install, rate after, and creators get paid via Stripe Connect when someone buys theirs.</p>
+          <ul class="tool__tags"><li>Stripe Connect</li><li>Ratings</li><li>Preview</li></ul>
+        </div>
+        <figure class="tool__shot"><img src="images/shop-community.png" alt="Community-submitted content section" loading="lazy" decoding="async"></figure>
+      </article>
+
+      <article class="tool">
+        <div class="tool__num" aria-hidden="true">V</div>
+        <div class="tool__body">
+          <p class="eyebrow eyebrow--small">The Codex</p>
+          <h3>Documentation where you&rsquo;re already looking.</h3>
+          <p>Every editor documented in-app, cross-linked to emulator references. No tab-switching to a wiki — the docs live next to the fields they describe, and search is offline-first.</p>
+          <ul class="tool__tags"><li>Offline</li><li>Cross-linked</li><li>Searchable</li></ul>
+        </div>
+        <figure class="tool__shot"><img src="images/docs.png" alt="Codex documentation screen" loading="lazy" decoding="async"></figure>
+      </article>
+
+      <article class="tool tool--reverse">
+        <div class="tool__num" aria-hidden="true">VI</div>
+        <div class="tool__body">
+          <p class="eyebrow eyebrow--small">Release notes</p>
+          <h3>A changelog that pages itself.</h3>
+          <p>Searchable timeline of what shipped, broke, and got fixed — with realtime updates over Supabase. When a new build lands, the client knows; when you pin a tool to a version, it stays pinned.</p>
+          <ul class="tool__tags"><li>Realtime</li><li>Version-pinned</li><li>Timestamped</li></ul>
+        </div>
+        <figure class="tool__shot"><img src="images/changelog.png" alt="Changelog timeline" loading="lazy" decoding="async"></figure>
+      </article>
+    </section>
+
+    <section class="stack" id="stack">
+      <header class="section-head">
+        <p class="eyebrow">Chapter&nbsp;III · Under the hood</p>
+        <h2>Built for the <em>shape</em> of this data.</h2>
+      </header>
+      <ul class="stack__grid">
+        <li>
+          <p class="stack__k">Renderer</p>
+          <p class="stack__v">Vite · React 19 · TypeScript</p>
+          <p class="stack__n">Hash-routed SPA inside Electron. Feature-scoped modules, not a framework.</p>
+        </li>
+        <li>
+          <p class="stack__k">Native</p>
+          <p class="stack__v">Rust · NAPI-RS · wgpu</p>
+          <p class="stack__n">DBC parsing and M2 rendering live in Rust for the parts that can&rsquo;t be slow.</p>
+        </li>
+        <li>
+          <p class="stack__k">Data</p>
+          <p class="stack__v">DBC · MySQL · Supabase</p>
+          <p class="stack__n">Client DBCs read-local. World MySQL writes for the six tools that need them. Supabase for auth &amp; realtime.</p>
+        </li>
+        <li>
+          <p class="stack__k">Cores</p>
+          <p class="stack__v">TrinityCore · AzerothCore</p>
+          <p class="stack__n">DBC work is core-agnostic; MySQL writers detect the schema and adjust.</p>
+        </li>
+        <li>
+          <p class="stack__k">3D</p>
+          <p class="stack__v">Babylon.js · Three.js</p>
+          <p class="stack__n">M2 viewer + map editor run in the renderer. Heavy ops offloaded to web workers.</p>
+        </li>
+        <li>
+          <p class="stack__k">Commerce</p>
+          <p class="stack__v">Stripe · Stripe Connect</p>
+          <p class="stack__n">One-time, subscription, and creator payouts — all wired into the in-app Shop.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="download" id="download">
+      <div class="download__card">
+        <p class="eyebrow">Chapter&nbsp;IV · The download</p>
+        <h2>Get the latest build.</h2>
+        <p class="download__tag" id="download-tag">Pulling release metadata from GitHub…</p>
+        <a class="cta cta--primary cta--large" id="cta-download-large" href="https://github.com/Isidorsson/wow-toolbox/releases">
+          <span class="cta__label" id="cta-label-large">View Releases</span>
+          <span class="cta__detail" id="cta-detail-large">github.com/Isidorsson/wow-toolbox</span>
+        </a>
+        <p class="download__fine">
+          Windows installer · release notes on GitHub · SHA listed on the asset page.
+        </p>
+      </div>
+    </section>
   </main>
+
+  <footer class="site" role="contentinfo">
+    <div class="footer__col">
+      <p class="brand__word">WoW Toolbox</p>
+      <p class="footer__fine">
+        Not affiliated with or endorsed by Blizzard Entertainment. <em>World of Warcraft®</em> is a trademark of Blizzard Entertainment, Inc.
+      </p>
+    </div>
+    <nav class="footer__links" aria-label="Secondary">
+      <a href="legal.html">
+        <span>Legal &amp; Policies</span>
+        <span class="pill">WIP</span>
+      </a>
+      <a href="contact.html">Contact</a>
+      <a href="https://github.com/Isidorsson/wow-toolbox">Source</a>
+      <a href="https://github.com/Isidorsson/wow-toolbox/releases">Releases</a>
+    </nav>
+  </footer>
+
+  <script src="welcome.js" defer></script>
 </body>
 </html>
