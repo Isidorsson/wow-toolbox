@@ -9,6 +9,10 @@ Support for additional client versions is planned.
 
 Grab the latest build from the [Releases](https://github.com/Isidorsson/wow-toolbox/releases) page.
 
+## Legal
+
+Terms, Privacy, Refunds, and Contributor agreements: [isidorsson.github.io/wow-toolbox](https://isidorsson.github.io/wow-toolbox/).
+
 ## Features
 
 - **Editors** — Achievement, Talent, Title, Spell, Quest, Faction, and NPC editors
