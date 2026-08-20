@@ -17,6 +17,7 @@
     largeLabel:     $('#cta-label-large'),
     largeDetail:    $('#cta-detail-large'),
     downloadTag:    $('#download-tag'),
+    downloadState:  $('#download-state'),
     releaseMeta:    $('#release-meta'),
   };
 
@@ -67,7 +68,7 @@
     if (ui.ctaVersion) ui.ctaVersion.textContent = 'no builds yet';
     if (ui.ctaDownload) {
       ui.ctaDownload.href = REPO_RELEASES;
-      const label = ui.ctaDownload.querySelector('.cta__label');
+      const label = ui.ctaDownload.querySelector('.btn__label');
       if (label) label.textContent = 'Watch repo';
     }
     if (ui.largeLabel)  ui.largeLabel.textContent  = 'View on GitHub';
@@ -78,6 +79,7 @@
         ? `No build published yet · ${reason}`
         : 'No build published yet — star the repo to get notified when the first release ships.';
     }
+    if (ui.downloadState) ui.downloadState.textContent = "No build yet";
     setField('version', 'pending');
     setField('size', '—');
     setField('date', '—');
@@ -98,6 +100,7 @@
     if (ui.largeDetail) ui.largeDetail.textContent = asset?.name || 'from GitHub releases';
     if (ui.largeCta)    ui.largeCta.href = dlUrl;
 
+    if (ui.downloadState) ui.downloadState.textContent = "Ready";
     const assetCount = rel.assets?.length ?? 0;
     if (ui.downloadTag) {
       ui.downloadTag.textContent =
