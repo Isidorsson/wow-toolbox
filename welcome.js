@@ -124,4 +124,81 @@
       const reason = err?.message === 'no-release' ? null : 'GitHub API unreachable';
       showNoRelease(reason);
     });
+
+  // Delivery tile: swap the mocked version rows for the three most recent
+  // releases. Stays on the mockup if the API is unreachable or empty.
+  const deliveryRows = document.querySelectorAll('#delivery-tile .tile__row[data-release]');
+  if (deliveryRows.length) {
+    fetch(`https://api.github.com/repos/${REPO}/releases?per_page=${deliveryRows.length}`, {
+      headers: { Accept: 'application/vnd.github+json' },
+    })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`http-${res.status}`))))
+      .then((list) => {
+        if (!Array.isArray(list) || list.length === 0) return;
+        deliveryRows.forEach((row, i) => {
+          const rel = list[i];
+          if (!rel) { row.hidden = true; return; }
+          const label = row.querySelector('span');
+          const state = row.querySelector('b');
+          if (label) label.textContent = rel.tag_name || rel.name || '—';
+          if (state) state.textContent = i === 0 ? 'shipped' : 'archived';
+        });
+      })
+      .catch(() => { /* keep the static mockup */ });
+  }
+})();
+
+/* Hero terminal tabs — one tab stop, arrows move the selection. */
+(() => {
+  const tablist = document.querySelector('.term__tabs[role="tablist"]');
+  if (!tablist) return;
+  const tabs = [...tablist.querySelectorAll('[role="tab"]')];
+
+  const select = (tab, focus = true) => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.classList.toggle('is-on', on);
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      const panel = document.getElementById(t.getAttribute('aria-controls'));
+      if (panel) panel.hidden = !on;
+    });
+    if (focus) tab.focus();
+  };
+
+  tabs.forEach((tab) => tab.addEventListener('click', () => select(tab, false)));
+
+  tablist.addEventListener('keydown', (e) => {
+    const i = tabs.indexOf(document.activeElement);
+    if (i === -1) return;
+    let next = null;
+    if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+    if (e.key === 'ArrowLeft')  next = tabs[(i - 1 + tabs.length) % tabs.length];
+    if (e.key === 'Home')       next = tabs[0];
+    if (e.key === 'End')        next = tabs[tabs.length - 1];
+    if (next) { e.preventDefault(); select(next); }
+  });
+})();
+
+/* Tool index — selecting a tool prints its one-line brief in the readout. */
+(() => {
+  const index = document.getElementById('tool-index');
+  const note = document.getElementById('index-note');
+  if (!index || !note) return;
+
+  index.addEventListener('click', (e) => {
+    const btn = e.target.closest('.index__btn');
+    if (!btn) return;
+    index.querySelectorAll('li.is-on').forEach((li) => li.classList.remove('is-on'));
+    btn.closest('li')?.classList.add('is-on');
+    note.innerHTML = '';
+    const prompt = document.createElement('b');
+    prompt.textContent = '>';
+    const name = document.createElement('span');
+    name.className = 'index__note-name';
+    name.textContent = `${btn.textContent.trim()} `;
+    const desc = document.createElement('span');
+    desc.textContent = `— ${btn.dataset.note}`;
+    note.append(prompt, ' ', name, desc);
+  });
 })();

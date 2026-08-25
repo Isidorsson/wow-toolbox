@@ -1,8 +1,9 @@
 /* ─────────────────────────────────────────────────────────────────────
    WoW Toolbox · welcome page
    Full-bleed bands on a 40px gutter — no centred column. Everything a
-   human reads is Inter; everything the system says is mono, uppercase,
-   wide-tracked. Depth is surface stepping and 1px slate hairlines.
+   human reads is Geist; everything the system says is Geist Mono,
+   uppercase, wide-tracked — the app's Frost-Etched chrome. Depth is
+   alpha surface stepping and 1px slate hairlines over the frost glow.
    Tokens: tokens.css
    ───────────────────────────────────────────────────────────────────── */
 
@@ -79,6 +80,19 @@
 }
 .tag .icon { color: var(--accent); font-size: 11px; }
 
+/* A tag that navigates: same chrome, cyan on hover, chevron nudges. */
+.tag a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.12s linear;
+}
+.tag a .icon { transition: transform 0.15s ease-out; }
+.tag a:hover { color: var(--accent-hi); }
+.tag a:hover .icon { transform: translateX(2px); }
+
 /* ── Header — static, full-bleed, one hairline ────────────────────── */
 
 header.site { border-bottom: 1px solid var(--line); }
@@ -121,8 +135,8 @@ header.site { border-bottom: 1px solid var(--line); }
 .bar__end { display: flex; align-items: center; gap: var(--gap-element); }
 
 /* ── Buttons ──────────────────────────────────────────────────────────
-   Deep teal ground with a phosphor label: a status indicator that
-   happens to be clickable. */
+   The app's CONTROL.action recipe: a cyan wash with a cyan border and
+   cyan-300 text. Hover deepens alpha, never shifts hue. */
 
 .btn {
   display: inline-flex;
@@ -142,13 +156,14 @@ header.site { border-bottom: 1px solid var(--line); }
 
 .btn--fill {
   background: var(--action);
-  border-color: var(--action);
-  color: var(--accent);
+  border-color: var(--action-line);
+  color: var(--accent-hi);
 }
-.btn--fill:hover { background: var(--action-hi); border-color: var(--action-hi); }
+.btn--fill:hover { background: var(--action-hi); }
 
+/* Secondary: slate at rest, cyan on hover — the app's actionNeutral. */
 .btn--ghost { border-color: var(--line); color: var(--text-2); }
-.btn--ghost:hover { border-color: var(--text-2); color: var(--text-hi); }
+.btn--ghost:hover { border-color: var(--action-line); color: var(--accent-hi); }
 
 .btn--lg { padding: 11px 16px; }
 
@@ -161,7 +176,7 @@ header.site { border-bottom: 1px solid var(--line); }
   text-transform: none;
 }
 
-/* ── Status badge — carbon fill, 1px inset green ring ─────────────── */
+/* ── Status badge — slate fill, 1px inset cyan ring ───────────────── */
 
 .badge {
   display: inline-flex;
@@ -237,7 +252,7 @@ header.site { border-bottom: 1px solid var(--line); }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, var(--bg) 0%, rgba(11, 14, 18, 0.55) 22%, rgba(11, 14, 18, 0) 60%);
+  background: linear-gradient(100deg, #0e1925 0%, rgba(14, 25, 37, 0.55) 22%, rgba(14, 25, 37, 0) 60%);
   pointer-events: none;
 }
 
@@ -274,7 +289,7 @@ header.site { border-bottom: 1px solid var(--line); }
 .term {
   background: var(--surface-1);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   max-width: 420px;
 }
 .term__tabs {
@@ -284,13 +299,20 @@ header.site { border-bottom: 1px solid var(--line); }
   border-bottom: 1px solid var(--line);
 }
 .term__tab {
+  font: inherit;
   font-size: var(--text-chrome);
   letter-spacing: var(--track-chrome);
+  text-transform: uppercase;
   color: var(--text-mut);
-  padding: 11px 0;
+  background: none;
+  border: 0;
   border-bottom: 1px solid transparent;
+  padding: 11px 0;
   margin-bottom: -1px;
+  cursor: pointer;
+  transition: color 0.12s linear;
 }
+.term__tab:hover { color: var(--text-hi); }
 .term__tab.is-on { color: var(--accent); border-bottom-color: var(--accent); }
 
 .term__body {
@@ -300,11 +322,11 @@ header.site { border-bottom: 1px solid var(--line); }
 }
 .term__body p { margin: 0; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .term__body b { color: var(--accent); margin-right: 6px; }
-.term__body i { color: var(--color-syntax-violet); font-style: normal; }
-.term__body em { color: var(--color-syntax-coral); font-style: normal; }
+.term__body i { color: var(--syntax-key); font-style: normal; }
+.term__body em { color: var(--syntax-val); font-style: normal; }
 .term__body u { color: var(--text-hi); text-decoration: none; }
 .term__out { color: var(--text-mut) !important; padding-left: 14px; }
-.term__ok { color: var(--accent) !important; padding-left: 14px; }
+.term__ok { color: var(--ok) !important; padding-left: 14px; }
 
 .term__caret {
   display: inline-block;
@@ -318,18 +340,21 @@ header.site { border-bottom: 1px solid var(--line); }
 
 /* ── Figure captions ──────────────────────────────────────────────── */
 
+/* Floating-chrome chip: glass over the render, like the app's canvas HUD. */
 .figtag {
   font-size: var(--text-caption);
   letter-spacing: var(--track-caption);
-  color: var(--text-mut);
+  color: var(--text-2);
   display: inline-flex;
   gap: 8px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 3px 8px;
-  background: var(--bg);
+  background: rgba(2, 6, 23, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
-.figtag span { color: var(--text-2); }
+.figtag span { color: var(--text); }
 .hero__render .figtag {
   position: absolute;
   top: var(--gutter);
@@ -430,7 +455,7 @@ header.site { border-bottom: 1px solid var(--line); }
 .tile {
   background: var(--surface-1);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: var(--gap-element);
   font-size: var(--text-label);
   letter-spacing: 0.01em;
@@ -451,9 +476,9 @@ header.site { border-bottom: 1px solid var(--line); }
 .tile__row.is-on b { color: var(--accent); }
 .tile__row b.is-live { color: var(--accent); }
 .tile__sql { margin: 0; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.tile__sql b { color: var(--color-syntax-violet); }
-.tile__sql u { color: var(--color-syntax-coral); text-decoration: none; }
-.tile__ok { margin: var(--gap-element) 0 0; color: var(--accent); }
+.tile__sql b { color: var(--syntax-key); }
+.tile__sql u { color: var(--syntax-val); text-decoration: none; }
+.tile__ok { margin: var(--gap-element) 0 0; color: var(--ok); }
 .tile__wire { width: 100%; height: 74px; color: var(--text-mut); display: block; }
 .tile__wire circle { fill: var(--accent); }
 
@@ -474,7 +499,8 @@ header.site { border-bottom: 1px solid var(--line); }
 .panel {
   background: var(--surface-1);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 .panel__bar {
   background: var(--surface-2);
@@ -546,7 +572,7 @@ header.site { border-bottom: 1px solid var(--line); }
 .jobs .status--err { color: var(--diagnostic); }
 
 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-mut); flex: none; }
-.dot--ok { background: var(--accent); }
+.dot--ok { background: var(--ok); }
 .dot--bad { background: var(--diagnostic); }
 
 .panel__foot {
@@ -576,7 +602,6 @@ header.site { border-bottom: 1px solid var(--line); }
 .index li {
   border-bottom: 1px solid var(--line);
   border-right: 1px solid var(--line);
-  padding: 13px 16px;
   font-size: var(--text-label);
   letter-spacing: var(--track-label);
   line-height: 1.45;
@@ -584,6 +609,36 @@ header.site { border-bottom: 1px solid var(--line); }
   transition: background-color 0.12s linear, color 0.12s linear;
 }
 .index li:hover { background: var(--surface-1); color: var(--accent); }
+.index li.is-on { background: var(--surface-1); color: var(--accent); }
+
+.index__btn {
+  display: block;
+  width: 100%;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 13px 16px;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* The readout the index drives — a prompt line, updated per selection. */
+.index__note {
+  margin: var(--gap-element) 0 0;
+  font-family: var(--font-mono);
+  font-feature-settings: "calt" 0;
+  font-size: var(--text-chrome);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--text-2);
+  min-height: 24px;
+}
+.index__note b { color: var(--accent); font-weight: 400; margin-right: 8px; }
+.index__note .index__note-name { color: var(--text-hi); }
 
 /* ── Toolkit exhibits — the shot bleeds to the outer edge ─────────── */
 
@@ -605,7 +660,8 @@ header.site { border-bottom: 1px solid var(--line); }
 }
 .ex__body h3 code {
   font-size: 0.8em;
-  color: var(--color-syntax-violet);
+  font-weight: 400;
+  color: var(--syntax-key);
   background: var(--surface-2);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -627,7 +683,7 @@ header.site { border-bottom: 1px solid var(--line); }
   display: block;
   background: var(--surface-1);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
 }
 .ex__shot .figtag { position: absolute; left: var(--gap-element); bottom: var(--gap-element); }
 
@@ -672,7 +728,7 @@ header.site { border-bottom: 1px solid var(--line); }
 .prompt {
   background: var(--surface-1);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: var(--pad-card);
   max-width: 640px;
 }
@@ -695,18 +751,18 @@ header.site { border-bottom: 1px solid var(--line); }
   justify-content: space-between;
   gap: var(--pad-card);
   background: var(--action);
-  border: 1px solid var(--action);
+  border: 1px solid var(--action-line);
   border-radius: var(--radius);
   padding: 12px var(--gap-element);
-  color: var(--accent);
+  color: var(--accent-hi);
   text-decoration: none;
   font-size: var(--text-chrome);
   letter-spacing: var(--track-chrome);
   transition: background-color 0.12s linear, border-color 0.12s linear;
 }
-.prompt__action:hover { background: var(--action-hi); border-color: var(--action-hi); }
+.prompt__action:hover { background: var(--action-hi); }
 .prompt__file {
-  color: var(--accent);
+  color: var(--accent-hi);
   opacity: 0.72;
   overflow: hidden;
   text-overflow: ellipsis;

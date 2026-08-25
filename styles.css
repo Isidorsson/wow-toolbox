@@ -1,8 +1,8 @@
 /* ─────────────────────────────────────────────────────────────────────
    WoW Toolbox · document pages (legal, contact, creators, 404)
-   Same system as the welcome page: void canvas, 1px slate hairlines,
-   weight 400 throughout, mono reserved for anything the system says.
-   Tokens: tokens.css
+   Same system as the welcome page: Frost-Etched — slate surfaces at
+   alpha on the frost-glow ground, 1px slate hairlines, mono reserved
+   for anything the system says. Tokens: tokens.css
    ───────────────────────────────────────────────────────────────────── */
 
 main {
@@ -128,7 +128,7 @@ code {
 .identity {
   background: var(--surface-1);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: var(--pad-card);
   margin: var(--pad-gutter) 0 32px;
 }
@@ -163,9 +163,9 @@ code {
 .doc-list li {
   background: var(--surface-1);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: var(--pad-card);
-  margin-bottom: 1px;
+  margin-bottom: 8px;
   transition: background-color 0.12s linear;
 }
 .doc-list li:hover { background: var(--surface-2); }
@@ -194,7 +194,7 @@ code {
   background: var(--surface-1);
   border: 1px solid var(--line);
   border-left: 1px solid var(--accent);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: 16px var(--pad-card);
   margin: var(--pad-gutter) 0;
   font-size: var(--text-body);
@@ -206,7 +206,7 @@ code {
 .wip-banner {
   background: var(--surface-1);
   box-shadow: var(--ring-neutral);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: 16px var(--pad-card);
   margin: 0 0 32px;
   font-size: var(--text-body);

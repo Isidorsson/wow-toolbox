@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WoW Toolbox — A desktop modding kit for World of Warcraft</title>
-  <meta name="description" content="WoW Toolbox is a desktop development kit for World of Warcraft client modding. 30 editors, creators, and generators in one window. Built first for 3.3.5a (WotLK); more client versions on the roadmap.">
-  <meta name="theme-color" content="#0b0e12">
+  <meta name="description" content="WoW Toolbox is a desktop development kit for World of Warcraft client modding. 36 editors, creators, and generators in one window. Built first for 3.3.5a (WotLK); more client versions on the roadmap.">
+  <meta name="theme-color" content="#04131c">
 
   <meta property="og:title" content="WoW Toolbox — A desktop modding kit for World of Warcraft">
-  <meta property="og:description" content="30 editors, creators, and generators for WoW client modding. Starting with 3.3.5a — more versions planned.">
+  <meta property="og:description" content="36 editors, creators, and generators for WoW client modding. Starting with 3.3.5a — more versions planned.">
   <meta property="og:image" content="images/toolbox-landing.png">
   <meta property="og:type" content="website">
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.5 14.5 8 8 14.5 1.5 8Z' fill='none' stroke='%2300d892' stroke-width='1.6'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.5 14.5 8 8 14.5 1.5 8Z' fill='none' stroke='%2322d3ee' stroke-width='1.6'/%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="welcome.css">
 </head>
@@ -64,7 +64,7 @@
         <p class="badge"><i class="led" aria-hidden="true"></i>Client 3.3.5a · WotLK</p>
         <h1 class="hero__title">Edit the client.<br>Skip the hex editor.</h1>
         <p class="hero__lede">
-          Thirty editors, creators, and generators for World of Warcraft client
+          Thirty-six editors, creators, and generators for World of Warcraft client
           modding — DBC parsing, live MySQL writes, 3D model and map previews, an
           in-app shop, and a realtime changelog.
         </p>
@@ -81,18 +81,34 @@
 
       <div class="hero__term">
         <div class="term">
-          <div class="term__tabs" role="presentation">
-            <span class="term__tab is-on">DBC</span>
-            <span class="term__tab">SQL</span>
-            <span class="term__tab">M2</span>
+          <div class="term__tabs" role="tablist" aria-label="Pipeline examples">
+            <button class="term__tab is-on" id="term-tab-dbc" role="tab" aria-selected="true" aria-controls="term-panel-dbc">DBC</button>
+            <button class="term__tab" id="term-tab-sql" role="tab" aria-selected="false" aria-controls="term-panel-sql" tabindex="-1">SQL</button>
+            <button class="term__tab" id="term-tab-m2" role="tab" aria-selected="false" aria-controls="term-panel-m2" tabindex="-1">M2</button>
           </div>
-          <div class="term__body">
+          <div class="term__body" id="term-panel-dbc" role="tabpanel" aria-labelledby="term-tab-dbc">
             <p><b>$</b> toolbox dbc open <em>Item.dbc</em></p>
             <p class="term__out">44 fields · 32,847 records · 3.3.5a</p>
             <p><b>$</b> toolbox item new <i>--template</i> <em>"epic sword"</em></p>
             <p class="term__out">entry <u>190042</u> free · display <u>64821</u> resolved</p>
             <p><b>$</b> commit <i>--preview</i></p>
             <p class="term__ok">INSERT INTO item_template … 1 row staged</p>
+            <p><b>$</b> <span class="term__caret" aria-hidden="true"></span></p>
+          </div>
+          <div class="term__body" id="term-panel-sql" role="tabpanel" aria-labelledby="term-tab-sql" hidden>
+            <p><b>$</b> toolbox sql preview <i>--tool</i> <em>item-creator</em></p>
+            <p class="term__out">INSERT INTO item_template · 1 row staged</p>
+            <p><b>$</b> toolbox sql commit</p>
+            <p class="term__ok">1 row written · worldserver live</p>
+            <p class="term__out">schema: TrinityCore 3.3.5 · no restart</p>
+            <p><b>$</b> <span class="term__caret" aria-hidden="true"></span></p>
+          </div>
+          <div class="term__body" id="term-panel-m2" role="tabpanel" aria-labelledby="term-tab-m2" hidden>
+            <p><b>$</b> toolbox m2 open <em>sword_2h_ashbringer.m2</em></p>
+            <p class="term__out">geometry · textures · attachments loaded</p>
+            <p><b>$</b> toolbox display resolve <u>64821</u></p>
+            <p class="term__ok">64821 → sword_2h_ashbringer</p>
+            <p class="term__out">previewed in the M2 Viewer, not at the login screen</p>
             <p><b>$</b> <span class="term__caret" aria-hidden="true"></span></p>
           </div>
         </div>
@@ -102,7 +118,7 @@
       </div>
 
       <figure class="hero__render">
-        <figcaption class="figtag">Fig. 01 <span>WoW Toolbox · 30 tools</span></figcaption>
+        <figcaption class="figtag">Fig. 01 <span>WoW Toolbox · 36 tools</span></figcaption>
         <img src="images/toolbox-landing.png" alt="WoW Toolbox landing screen showing every tool category" fetchpriority="high" decoding="async">
       </figure>
 
@@ -142,7 +158,7 @@
 
       <ul class="cols">
         <li class="col">
-          <h3 class="tag">Client data <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></h3>
+          <h3 class="tag"><a href="#editors">Client data <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></h3>
           <div class="tile">
             <div class="tile__row"><span>ID</span><b>190042</b></div>
             <div class="tile__row"><span>name</span><b>Ashbringer</b></div>
@@ -158,7 +174,7 @@
         </li>
 
         <li class="col">
-          <h3 class="tag">Server data <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></h3>
+          <h3 class="tag"><a href="#workflow">Server data <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></h3>
           <div class="tile">
             <p class="tile__sql"><b>INSERT INTO</b> item_template</p>
             <p class="tile__sql">(entry, name, displayid)</p>
@@ -174,7 +190,7 @@
         </li>
 
         <li class="col">
-          <h3 class="tag">Assets <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></h3>
+          <h3 class="tag"><a href="#stack">Assets <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></h3>
           <div class="tile">
             <svg class="tile__wire" viewBox="0 0 120 74" aria-hidden="true">
               <path d="M60 8 96 26v30L60 66 24 56V26Z" fill="none" stroke="currentColor" stroke-width="1"/>
@@ -191,11 +207,11 @@
         </li>
 
         <li class="col">
-          <h3 class="tag">Delivery <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></h3>
-          <div class="tile">
-            <div class="tile__row"><span>v1.0.62</span><b class="is-live">shipped</b></div>
-            <div class="tile__row"><span>v1.0.61</span><b>archived</b></div>
-            <div class="tile__row"><span>v1.0.60</span><b>archived</b></div>
+          <h3 class="tag"><a href="#changelog">Delivery <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></h3>
+          <div class="tile" id="delivery-tile">
+            <div class="tile__row" data-release><span>v1.0.62</span><b class="is-live">shipped</b></div>
+            <div class="tile__row" data-release><span>v1.0.61</span><b>archived</b></div>
+            <div class="tile__row" data-release><span>v1.0.60</span><b>archived</b></div>
             <div class="tile__row is-on"><span>pinned</span><b>Item Creator</b></div>
           </div>
           <ul class="facts">
@@ -208,7 +224,7 @@
     </section>
 
     <!-- Comparison diagram -->
-    <section class="band">
+    <section class="band" id="workflow">
       <h2 class="statement">
         <span>Adding one item used to cost four tools and a restart.</span>
         The IDs were grepped, the DBC was patched by hand, the SQL was written
@@ -258,36 +274,67 @@
     <!-- Full tool index -->
     <section class="band">
       <h2 class="statement">
-        <span>Thirty tools, one table of contents.</span>
+        <span>Thirty-six tools, one table of contents.</span>
         Each tool is a sandboxed feature module. The landing screen is the
         index; nothing is more than two clicks from the cursor.
       </h2>
-      <ul class="index">
-        <li>Achievement Editor</li><li>Talent Editor</li><li>Spell Editor</li><li>Quest Editor</li><li>Title Editor</li>
-        <li>Faction Editor</li><li>Creature Editor</li><li>Currency Editor</li><li>Icon Editor</li><li>SAI Editor</li>
-        <li>Taxi Path Editor</li><li>Map Editor</li><li>Dungeon Designer</li><li>World Event Designer</li><li>Custom Class Creator</li>
-        <li>Item Creator</li><li>Item Generator</li><li>NPC Generator</li><li>Loot Generator</li><li>Vendor Generator</li>
-        <li>Skill Line Manager</li><li>Teleport Manager</li><li>DBC Library</li><li>DBC Manager</li><li>SQL Query Builder</li>
-        <li>M2 Viewer</li><li>Map Asset Packer</li><li>Import / Export</li><li>AI Assistant</li><li>Shop</li>
+      <ul class="index" id="tool-index">
+        <li><button class="index__btn" data-note="achievements, criteria, and categories edited as typed records">Achievement Editor</button></li>
+        <li><button class="index__btn" data-note="talent trees, ranks, and prerequisites per class">Talent Editor</button></li>
+        <li><button class="index__btn" data-note="spell effects, auras, and attributes across the spell DBCs">Spell Editor</button></li>
+        <li><button class="index__btn" data-note="quest objectives, chains, and rewards">Quest Editor</button></li>
+        <li><button class="index__btn" data-note="player titles and the records that grant them">Title Editor</button></li>
+        <li><button class="index__btn" data-note="reputations, standings, and faction groups">Faction Editor</button></li>
+        <li><button class="index__btn" data-note="NPC templates — stats, models, and flags">Creature Editor</button></li>
+        <li><button class="index__btn" data-note="custom currencies, caps, and categories">Currency Editor</button></li>
+        <li><button class="index__btn" data-note="enchantments and random suffixes, with roll-chance checks">Enchant &amp; Affix Editor</button></li>
+        <li><button class="index__btn" data-note="a glyph's item, spell, and GlyphProperties row edited as one record">Glyph Creator</button></li>
+        <li><button class="index__btn" data-note="heirloom scaling curves and level-by-level stat budgets">Scaling Gear Studio</button></li>
+        <li><button class="index__btn" data-note="chests, doors, and transports with a 3D bounds preview">GameObject Studio</button></li>
+        <li><button class="index__btn" data-note="mounts authored end-to-end — creature, spell, and item">Mount Creator</button></li>
+        <li><button class="index__btn" data-note="the login screen rebuilt without touching the MPQ">Login Screen Studio</button></li>
+        <li><button class="index__btn" data-note="icons browsed and assigned visually">Icon Editor</button></li>
+        <li><button class="index__btn" data-note="SmartAI scripts without hand-written SQL">SAI Editor</button></li>
+        <li><button class="index__btn" data-note="flight paths drawn on a map canvas">Taxi Path Editor</button></li>
+        <li><button class="index__btn" data-note="3D terrain editing in a native Bevy viewport">Map Editor</button></li>
+        <li><button class="index__btn" data-note="instance content staged in one place">Dungeon Designer</button></li>
+        <li><button class="index__btn" data-note="seasonal world events scheduled and scripted">World Event Designer</button></li>
+        <li><button class="index__btn" data-note="a new playable class, from DBC to world DB">Custom Class Creator</button></li>
+        <li><button class="index__btn" data-note="items from templates, with previewed SQL and visual display IDs">Item Creator</button></li>
+        <li><button class="index__btn" data-note="items generated in batches from templates">Item Generator</button></li>
+        <li><button class="index__btn" data-note="NPCs generated in bulk">NPC Generator</button></li>
+        <li><button class="index__btn" data-note="loot tables rolled and written to the DB">Loot Generator</button></li>
+        <li><button class="index__btn" data-note="vendor inventories assembled and priced">Vendor Generator</button></li>
+        <li><button class="index__btn" data-note="skill lines and their ability links">Skill Line Manager</button></li>
+        <li><button class="index__btn" data-note="teleport locations managed for GMs">Teleport Manager</button></li>
+        <li><button class="index__btn" data-note="a reference for every known DBC schema">DBC Library</button></li>
+        <li><button class="index__btn" data-note="DBC import, export, and batch operations">DBC Manager</button></li>
+        <li><button class="index__btn" data-note="world-DB queries composed visually">SQL Query Builder</button></li>
+        <li><button class="index__btn" data-note="models inspected, display IDs picked on sight">M2 Viewer</button></li>
+        <li><button class="index__btn" data-note="patch MPQs exported straight from the app">Map Asset Packer</button></li>
+        <li><button class="index__btn" data-note="round-trips between client and server data">Import / Export</button></li>
+        <li><button class="index__btn" data-note="an in-app assistant for content authoring">AI Assistant</button></li>
+        <li><button class="index__btn" data-note="content packs and add-ons, Stripe-backed">Shop</button></li>
       </ul>
+      <p class="index__note" id="index-note" aria-live="polite"><b>&gt;</b> <span>select a tool for its one-line brief</span></p>
     </section>
 
     <!-- Toolkit exhibits — image bleeds to the outer edge -->
     <section class="band" id="toolkit">
       <h2 class="statement">
         <span>What&rsquo;s in the window.</span>
-        Six screens out of thirty. Pin a tool to a release in the Changelog and
-        the next launch pulls it automatically.
+        Seven screens out of thirty-six. Pin a tool to a release in the Changelog
+        and the next launch pulls it automatically.
       </h2>
 
-      <article class="ex">
+      <article class="ex" id="editors">
         <div class="ex__body">
           <h3>Editors and creators, by category.</h3>
-          <p>Achievements, Talents, Titles, Spells, Quests, Factions, Creatures, Currencies — plus the Skill Line Manager, Custom Class Creator, and an M2 Viewer. Each tool is a sandboxed feature module; the landing is the table of contents.</p>
-          <ul class="chips"><li>DBC</li><li>MySQL</li><li>Sandboxed</li><li>30 tools</li></ul>
+          <p>Achievements, Talents, Titles, Spells, Quests, Factions, Creatures, Currencies — plus the Skill Line Manager, Custom Class Creator, Enchant &amp; Affix Editor, and an M2 Viewer. Each tool is a sandboxed feature module; the landing is the table of contents.</p>
+          <ul class="chips"><li>DBC</li><li>MySQL</li><li>Sandboxed</li><li>36 tools</li></ul>
         </div>
         <figure class="ex__shot">
-          <img src="images/toolbox-landing.png" alt="Landing grid with all tool categories" loading="lazy" decoding="async">
+          <img src="images/toolbox-grid.png" alt="Toolbox grid showing every tool category" loading="lazy" decoding="async">
           <figcaption class="figtag">Fig. 02 <span>The hub</span></figcaption>
         </figure>
       </article>
@@ -306,29 +353,41 @@
 
       <article class="ex">
         <div class="ex__body">
-          <h3>In-app Shop, Stripe-backed.</h3>
-          <p>Content packs, templates, and tool add-ons — versioned, licensed, and delivered over the wire. Payments run through Stripe; the app handles install, verification, and update notifications.</p>
-          <ul class="chips"><li>Stripe</li><li>Licensed</li><li>Auto-install</li></ul>
+          <h3>All 49,843 spells, one record at a time.</h3>
+          <p>Spell.dbc streamed straight off your client — every effect, aura, cost and attribute on one page, with the icon and tooltip the game will actually print. Clone a rank, batch-edit a family, or export the whole file back out.</p>
+          <ul class="chips"><li>230+ fields</li><li>Batch edit</li><li>Live preview</li></ul>
         </div>
         <figure class="ex__shot">
-          <img src="images/shop.png" alt="In-app Shop screen" loading="lazy" decoding="async">
-          <figcaption class="figtag">Fig. 04 <span>Shop</span></figcaption>
+          <img src="images/spell-editor.png" alt="Spell Editor showing Fireball rank 11 with its effects" loading="lazy" decoding="async">
+          <figcaption class="figtag">Fig. 04 <span>Spell Editor</span></figcaption>
         </figure>
       </article>
 
       <article class="ex ex--flip">
         <div class="ex__body">
-          <h3>Creator uploads, front-of-house.</h3>
-          <p>Submissions from the community sit beside the featured catalogue. Preview before install, rate after, and creators get paid via Stripe Connect when someone buys theirs.</p>
-          <ul class="chips"><li>Stripe Connect</li><li>Ratings</li><li>Preview</li></ul>
+          <h3>Talent trees you can see.</h3>
+          <p>All three trees per class on one canvas, drawn from Talent.dbc and TalentTab.dbc. Move a talent, rewire a prerequisite, or start a whole new tree — the ranks, icons and arrows stay honest.</p>
+          <ul class="chips"><li>10 classes</li><li>Pet trees</li><li>Undo/redo</li></ul>
         </div>
         <figure class="ex__shot">
-          <img src="images/shop-community.png" alt="Community-submitted content section" loading="lazy" decoding="async">
-          <figcaption class="figtag">Fig. 05 <span>Community</span></figcaption>
+          <img src="images/talent-editor.png" alt="Talent Editor showing the three Mage talent trees" loading="lazy" decoding="async">
+          <figcaption class="figtag">Fig. 05 <span>Talent Editor</span></figcaption>
         </figure>
       </article>
 
       <article class="ex">
+        <div class="ex__body">
+          <h3>Balanced items, generated to budget.</h3>
+          <p>Pick a slot, an item level and a stat spread; the generator spends the budget the way the game does and shows you the tooltip before anything is written. Export as DBC, SQL, JSON, CSV — or straight into the world DB.</p>
+          <ul class="chips"><li>Stat budget</li><li>Batch &times;250</li><li>TC / AC</li></ul>
+        </div>
+        <figure class="ex__shot">
+          <img src="images/item-generator.png" alt="Item Generator with a generated epic chestpiece preview" loading="lazy" decoding="async">
+          <figcaption class="figtag">Fig. 06 <span>Item Generator</span></figcaption>
+        </figure>
+      </article>
+
+      <article class="ex ex--flip">
         <div class="ex__body">
           <h3>Documentation where you&rsquo;re already looking.</h3>
           <p>Every editor documented in-app, cross-linked to emulator references. No tab-switching to a wiki — the docs live next to the fields they describe, and search is offline-first.</p>
@@ -336,11 +395,11 @@
         </div>
         <figure class="ex__shot">
           <img src="images/docs.png" alt="Codex documentation screen" loading="lazy" decoding="async">
-          <figcaption class="figtag">Fig. 06 <span>The Codex</span></figcaption>
+          <figcaption class="figtag">Fig. 07 <span>The Codex</span></figcaption>
         </figure>
       </article>
 
-      <article class="ex ex--flip">
+      <article class="ex" id="changelog">
         <div class="ex__body">
           <h3>A changelog that pages itself.</h3>
           <p>Searchable timeline of what shipped, broke, and got fixed — with realtime updates over Supabase. When a new build lands, the client knows; when you pin a tool to a version, it stays pinned.</p>
@@ -348,7 +407,7 @@
         </div>
         <figure class="ex__shot">
           <img src="images/changelog.png" alt="Changelog timeline" loading="lazy" decoding="async">
-          <figcaption class="figtag">Fig. 07 <span>Changelog</span></figcaption>
+          <figcaption class="figtag">Fig. 08 <span>Changelog</span></figcaption>
         </figure>
       </article>
     </section>
@@ -364,7 +423,7 @@
         <li>
           <p class="tag">Renderer</p>
           <p class="specs__v">Vite · React 19 · TypeScript</p>
-          <p class="specs__n">Hash-routed SPA inside Electron. Feature-scoped modules, not a framework.</p>
+          <p class="specs__n">Hash-routed SPA inside Tauri&nbsp;2. Feature-scoped modules, not a framework.</p>
         </li>
         <li>
           <p class="tag">Native</p>
@@ -384,7 +443,7 @@
         <li>
           <p class="tag">3D</p>
           <p class="specs__v">Three.js · Bevy</p>
-          <p class="specs__n">The M2 viewer and map editor render in the app; Bevy and wgpu carry the native passes.</p>
+          <p class="specs__n">The M2 viewer renders in Three.js; the map editor runs a native Bevy viewport on wgpu.</p>
         </li>
         <li>
           <p class="tag">Commerce</p>

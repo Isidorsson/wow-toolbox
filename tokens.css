@@ -1,50 +1,62 @@
 /* ─────────────────────────────────────────────────────────────────────
    WoW Toolbox · design tokens + base
-   System: terminal-grade infrastructure. Void canvas, 1px slate hairlines,
-   mono as system chrome, weight 400 everywhere, phosphor green rationed to
-   status and active state only. Source: Setup/designToken.json.
+   System: Frost-Etched — the app's own chrome, worn by the site.
+   Blue-slate ground under a cyan-and-indigo corner glow, slate surfaces
+   at alpha, cyan as the only primary accent, mono uppercase micro-labels
+   for everything the system says. Source: the editor's
+   docs/ui-style-guide.md and src/styles/colors.css.
    Loaded before every page stylesheet.
    ───────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* ── Palette ─────────────────────────────────────────────────────── */
-  --color-void-black: #0b0e12;
-  --color-carbon: #181a1d;
-  --color-graphite: #1f2124;
-  --color-slate-base: #303235;
-  --color-fog: #5d5e61;
-  --color-steel: #818284;
-  --color-ash: #a3a4a5;
-  --color-silver: #bababb;
-  --color-bone: #dedede;
-  --color-phosphor-green: #00d892;
-  --color-deep-teal: #002923;
-  --color-emerald-depth: #005441;
-  --color-diagnostic-magenta: #9f3f53;
-  --color-syntax-violet: #c58aff;
-  --color-syntax-coral: #ff6285;
-  --color-syntax-forest: #006d4a;
+  /* ── Palette — Tailwind slate + the app's accent contract ───────── */
+  --color-abyss: #04131c;        /* app gradient top — deepest ground */
+  --color-deep-slate: #181f2f;   /* app background */
+  --color-slate-950: #020617;
+  --color-slate-900: #0f172a;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
+  --color-slate-100: #f1f5f9;
+  --color-cyan: #22d3ee;         /* primary — active, focused, hovered */
+  --color-cyan-bright: #67e8f9;  /* accent text on cyan washes */
+  --color-sky: #38bdf8;          /* atmosphere glow, secondary cool */
+  --color-indigo: #6366f1;       /* atmosphere glow only */
+  --color-violet: #a78bfa;       /* bulk / derived — syntax keys */
+  --color-amber: #fbbf24;        /* warning — syntax values */
+  --color-emerald: #34d399;      /* success, completed, validated */
+  --color-rose: #fb7185;         /* error and destructive only */
 
   /* ── Semantic roles ──────────────────────────────────────────────── */
-  --bg: var(--color-void-black);
-  --surface-1: var(--color-carbon);      /* cards, panels, badges */
-  --surface-2: var(--color-graphite);    /* nested / elevated panels */
-  --line: var(--color-slate-base);       /* the only hairline colour */
+  --bg: var(--color-deep-slate);
+  --surface-1: rgba(15, 23, 42, 0.55);   /* cards, panels — slate-900 at alpha */
+  --surface-2: rgba(30, 41, 59, 0.6);    /* nested / elevated — slate-800 at alpha */
+  --line: rgba(51, 65, 85, 0.6);         /* the only hairline — slate-700 at alpha */
 
-  --text-hi: var(--color-bone);          /* headlines, display copy */
-  --text: var(--color-silver);           /* body, nav */
-  --text-2: var(--color-ash);            /* secondary, links at rest */
-  --text-mut: var(--color-steel);        /* tertiary, inactive */
+  --text-hi: var(--color-slate-100);     /* headlines, display copy */
+  --text: var(--color-slate-300);        /* body, nav */
+  --text-2: var(--color-slate-400);      /* secondary, links at rest */
+  /* Muted is slate-400 at alpha — the app's textMuted idiom. Solid
+     slate-500 reads 3.5:1 on this ground and fails AA for captions. */
+  --text-mut: rgba(148, 163, 184, 0.85);
 
-  --accent: var(--color-phosphor-green); /* active / initialized / selected */
-  --action: var(--color-deep-teal);      /* the only chromatic fill */
-  --action-hi: var(--color-emerald-depth);
-  /* Readout red. Coral over magenta: same signal, passes AA on carbon. */
-  --diagnostic: var(--color-syntax-coral);
+  --accent: var(--color-cyan);           /* active / selected / primary rail */
+  --accent-hi: var(--color-cyan-bright); /* accent text on washed fills */
+  --action: rgba(34, 211, 238, 0.12);    /* primary button wash */
+  --action-hi: rgba(34, 211, 238, 0.22); /* its hover step — same hue, more alpha */
+  --action-line: rgba(34, 211, 238, 0.4);
+  --ok: var(--color-emerald);            /* success readouts */
+  --diagnostic: var(--color-rose);       /* errors, broken rows */
+
+  --syntax-key: var(--color-violet);     /* keys / keywords in code mockups */
+  --syntax-val: var(--color-amber);      /* values / strings in code mockups */
 
   /* ── Type ────────────────────────────────────────────────────────── */
-  --font-sans: 'Inter', 'Helvetica Neue', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: 'Geist', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', 'Fira Code', 'JetBrains Mono', ui-monospace, Consolas, monospace;
 
   --text-caption: 10px;
   --text-label: 11px;
@@ -56,15 +68,16 @@
   --text-heading: 36px;
   --text-display: 65px;
 
-  --track-caption: 0.064em;
-  --track-label: 0.058em;
-  --track-chrome: 0.053em;
-  --track-display: -0.005em;
+  --track-caption: 0.18em;
+  --track-label: 0.14em;
+  --track-chrome: 0.1em;
+  --track-display: -0.02em;
 
   /* ── Shape ───────────────────────────────────────────────────────── */
-  --radius: 1px;
-  --ring-accent: inset 0 0 0 1px oklab(0.77 -0.184187 0.0538599 / 0.15);
-  --ring-neutral: inset 0 0 0 1px oklab(0.79 -0.000191013 -0.00108329 / 0.15);
+  --radius: 6px;        /* controls, chips, badges */
+  --radius-lg: 10px;    /* cards, panels, terminal frames */
+  --ring-accent: inset 0 0 0 1px rgba(34, 211, 238, 0.35);
+  --ring-neutral: inset 0 0 0 1px rgba(148, 163, 184, 0.25);
 
   /* ── Layout ──────────────────────────────────────────────────────── */
   --maxw: 1200px;
@@ -85,15 +98,36 @@ html {
   scroll-padding-top: 88px;
 }
 
+/* Frost atmosphere: the app's canonical backdrop — abyss-to-slate ground
+   with a cyan glow top-left and an indigo glow bottom-right. */
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle 640px at 80px 80px, rgba(56, 189, 248, 0.14), transparent 70%),
+    radial-gradient(circle 720px at calc(100% - 90px) calc(100% - 90px), rgba(99, 102, 241, 0.12), transparent 70%),
+    linear-gradient(180deg, var(--color-abyss) 0%, var(--color-deep-slate) 100%);
+  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: var(--text-lede);
   font-weight: 400;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+/* The 48px grid, at whisper opacity — same as the app's <FrostAtmosphere />. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Mono is system chrome, not code — the ligature grid stays rigid. */
@@ -103,14 +137,15 @@ code, kbd, samp, pre, .mono {
   font-variant-ligatures: none;
 }
 
-/* Hierarchy comes from size and tracking. Never from weight. */
-h1, h2, h3, h4, h5, h6, b, strong { font-weight: 400; }
-strong, b { color: var(--text-hi); }
+/* Titles are semibold slate-100 — hierarchy from weight and size, like
+   the app. Strong carries medium weight in running copy. */
+h1, h2, h3, h4, h5, h6 { font-weight: 600; }
+strong, b { font-weight: 500; color: var(--text-hi); }
 
-::selection { background: var(--action-hi); color: var(--text-hi); }
+::selection { background: rgba(34, 211, 238, 0.28); color: var(--text-hi); }
 
 :focus-visible {
-  outline: 1px solid var(--accent);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: var(--radius);
 }
