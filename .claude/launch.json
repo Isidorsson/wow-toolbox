@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "site",
-      "runtimeExecutable": "py",
-      "runtimeArgs": ["-m", "http.server", "4321"],
-      "port": 4321
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4399"],
+      "port": 4399
     }
   ]
 }
