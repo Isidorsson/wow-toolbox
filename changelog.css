@@ -1,0 +1,200 @@
+/* ─────────────────────────────────────────────────────────────────────
+   WoW Toolbox · release feed
+   The live changelog panel on the landing page, drawn by changelog.js.
+   Category colours are the desktop app's accent contract and are not
+   negotiable: added emerald, improved violet, fixed sky, removed amber,
+   known issues amber as an outline. Rose is never used here, a feed
+   that cannot load is not an error the reader caused.
+   Tokens: tokens.css · layout primitives: welcome.css
+   ───────────────────────────────────────────────────────────────────── */
+
+.feed { overflow: hidden; }
+
+.feed__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line-glass);
+  font-size: var(--text-caption);
+  letter-spacing: var(--track-caption);
+  text-transform: uppercase;
+  color: var(--text-mut);
+}
+.feed__title { display: inline-flex; align-items: center; gap: 10px; }
+.feed__meta { margin-left: auto; }
+
+/* The LED is the connection state: muted until a fetch lands, emerald
+   while the feed is live, pulsing while a first request is in flight. */
+.feed .led { background: var(--text-mut); box-shadow: none; }
+.feed[data-state="loading"] .led { animation: feed-pulse 1.1s ease-in-out infinite; }
+.feed[data-state="live"] .led { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+.feed[data-state="live"] .feed__status { color: var(--ok); }
+
+@keyframes feed-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ── Messages and the loading skeleton ────────────────────────────── */
+
+.feed__msg {
+  margin: 0;
+  padding: 22px 18px;
+  font-size: var(--text-chrome);
+  line-height: 1.7;
+  color: var(--text-2);
+}
+.feed a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--action-line);
+}
+.feed a:hover { color: var(--accent-hi); }
+
+.feed__skel { display: grid; gap: 12px; padding: 22px 18px; }
+.feed__skel i {
+  display: block;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--line-glass);
+  animation: feed-pulse 1.1s ease-in-out infinite;
+}
+.feed__skel i:nth-child(1) { width: 22%; }
+.feed__skel i:nth-child(2) { width: 88%; }
+.feed__skel i:nth-child(3) { width: 74%; }
+
+/* ── Entries ──────────────────────────────────────────────────────── */
+
+.entry { padding: 18px 18px 16px; border-top: 1px solid var(--line-glass); }
+.entry:first-child { border-top: 0; }
+
+.entry__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-bottom: 12px; }
+.entry__v { font-size: var(--text-lede); line-height: 1.3; }
+.entry__latest,
+.entry__when,
+.entry__count {
+  margin: 0;
+  font-size: var(--text-caption);
+  letter-spacing: var(--track-caption);
+  text-transform: uppercase;
+  color: var(--text-mut);
+}
+.entry__latest {
+  padding: 2px 7px;
+  color: var(--accent-hi);
+  border: 1px solid var(--action-line);
+  border-radius: var(--r-sm);
+  background: var(--action);
+}
+.entry__count { margin-left: auto; }
+
+/* ── Category groups ──────────────────────────────────────────────── */
+
+.group[data-cat="added"] { --cat: var(--emerald); }
+.group[data-cat="improved"] { --cat: var(--violet); }
+.group[data-cat="fixed"] { --cat: var(--sky); }
+.group[data-cat="removed"],
+.group[data-cat="known_issues"] { --cat: var(--amber); }
+.group[data-cat="other"] { --cat: var(--text-2); }
+
+.group {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 6px 16px;
+  padding: 8px 0;
+}
+.cat {
+  justify-self: start;
+  align-self: start;
+  margin: 0;
+  padding: 3px 8px;
+  font-size: var(--text-caption);
+  font-weight: 400;
+  letter-spacing: var(--track-caption);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--cat);
+  background: color-mix(in srgb, var(--cat) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cat) 38%, transparent);
+  border-radius: var(--r-sm);
+}
+/* Known issues share removed's hue but are an outline, not a fill. */
+.group[data-cat="known_issues"] .cat {
+  background: transparent;
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--cat) 70%, transparent);
+}
+
+.group ul { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.group li {
+  position: relative;
+  padding-left: 14px;
+  font-size: var(--text-chrome);
+  line-height: 1.65;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.group li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--cat);
+}
+.group[data-cat="known_issues"] li::before { background: transparent; box-shadow: inset 0 0 0 1px var(--cat); }
+
+/* ── Collapse past a few items ────────────────────────────────────────
+   changelog.js tags everything beyond the first few as .is-extra and
+   flips data-open from the toggle button. */
+
+.entry[data-open="false"] .is-extra { display: none; }
+
+.entry__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 32px;
+  margin-top: 10px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: var(--text-caption);
+  letter-spacing: var(--track-caption);
+  text-transform: uppercase;
+  color: var(--text-2);
+  background: var(--surface-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.entry__more:hover { background: var(--surface-hover); border-color: var(--action-line); color: var(--accent); }
+.entry__more::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--dur) var(--ease);
+}
+.entry__more[aria-expanded="true"]::after { transform: translateY(1px) rotate(-135deg); }
+
+.feed__foot {
+  margin: 0;
+  padding: 12px 18px;
+  border-top: 1px solid var(--line-glass);
+  font-size: var(--text-caption);
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+  color: var(--text-mut);
+}
+
+@media (max-width: 620px) {
+  .entry { padding: 16px 16px 14px; }
+  .group { grid-template-columns: minmax(0, 1fr); }
+  .entry__count { margin-left: 0; }
+}

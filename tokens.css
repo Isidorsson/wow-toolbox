@@ -1,62 +1,84 @@
 /* ─────────────────────────────────────────────────────────────────────
    WoW Toolbox · design tokens + base
-   System: Frost-Etched — the app's own chrome, worn by the site.
-   Blue-slate ground under a cyan-and-indigo corner glow, slate surfaces
-   at alpha, cyan as the only primary accent, mono uppercase micro-labels
-   for everything the system says. Source: the editor's
-   docs/ui-style-guide.md and src/styles/colors.css.
-   Loaded before every page stylesheet.
+   System: Frost-Etched, the desktop app's own chrome worn by the site.
+   Every value is transcribed from the editor repo (src/styles/colors.css,
+   fonts.css, glass-morphism.css) and its docs/ui-style-guide.md: slate
+   surfaces at alpha, cyan as the only primary accent, one monospace face
+   with micro-labels told apart by size, case and tracking.
+   Loaded before every page stylesheet. styles.css (document pages) and
+   welcome.css (landing) share these names: add to them, don't rename.
    ───────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* ── Palette — Tailwind slate + the app's accent contract ───────── */
-  --color-abyss: #04131c;        /* app gradient top — deepest ground */
-  --color-deep-slate: #181f2f;   /* app background */
-  --color-slate-950: #020617;
-  --color-slate-900: #0f172a;
-  --color-slate-800: #1e293b;
-  --color-slate-700: #334155;
-  --color-slate-600: #475569;
-  --color-slate-500: #64748b;
-  --color-slate-400: #94a3b8;
-  --color-slate-300: #cbd5e1;
-  --color-slate-100: #f1f5f9;
-  --color-cyan: #22d3ee;         /* primary — active, focused, hovered */
-  --color-cyan-bright: #67e8f9;  /* accent text on cyan washes */
-  --color-sky: #38bdf8;          /* atmosphere glow, secondary cool */
-  --color-indigo: #6366f1;       /* atmosphere glow only */
-  --color-violet: #a78bfa;       /* bulk / derived — syntax keys */
-  --color-amber: #fbbf24;        /* warning — syntax values */
-  --color-emerald: #34d399;      /* success, completed, validated */
-  --color-rose: #fb7185;         /* error and destructive only */
+  /* ── Ground ──────────────────────────────────────────────────────── */
+  --bg: #181f2f;          /* colors.css --color-background */
+  --bg-top: #04131c;      /* top of the app's ground gradient */
 
-  /* ── Semantic roles ──────────────────────────────────────────────── */
-  --bg: var(--color-deep-slate);
-  --surface-1: rgba(15, 23, 42, 0.55);   /* cards, panels — slate-900 at alpha */
-  --surface-2: rgba(30, 41, 59, 0.6);    /* nested / elevated — slate-800 at alpha */
-  --line: rgba(51, 65, 85, 0.6);         /* the only hairline — slate-700 at alpha */
+  /* ── Slate ramp: colors.css --color-neutral-* ──────────────────── */
+  --slate-950: #020617;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-300: #cbd5e1;
+  --slate-100: #f1f5f9;
 
-  --text-hi: var(--color-slate-100);     /* headlines, display copy */
-  --text: var(--color-slate-300);        /* body, nav */
-  --text-2: var(--color-slate-400);      /* secondary, links at rest */
-  /* Muted is slate-400 at alpha — the app's textMuted idiom. Solid
+  /* ── The accent contract: ui-style-guide.md §1 ─────────────────────
+     Each hue carries meaning a reader takes off the colour alone, so
+     none of these is decorative. Rose is for error and destructive
+     states only; indigo is atmosphere glow only.                      */
+  --cyan: #22d3ee;        /* primary: active, focused, hovered */
+  --cyan-300: #67e8f9;    /* accent text on a cyan wash */
+  --emerald: #34d399;     /* success, completed, validated */
+  --amber: #fbbf24;       /* warning, unsaved, batch impact */
+  --rose: #fb7185;        /* error and destructive only */
+  --sky: #38bdf8;         /* secondary cool: atmosphere, sibling tools */
+  --violet: #a78bfa;      /* bulk, generated, derived data */
+  --teal: #2dd4bf;        /* view / inspect, the DBC Manager workflow set */
+  --indigo: #6366f1;      /* atmosphere glow only */
+
+  /* ── Surfaces: slate at 40–85% alpha, never opaque ─────────────────
+     The legacy names map onto the app's SURFACE set: --surface-1 is
+     SURFACE.base, --surface-2 is the raised step.                     */
+  --surface-1: rgba(15, 23, 42, 0.60);      /* panels, cards */
+  --surface-2: rgba(30, 41, 59, 0.60);      /* nested / elevated */
+  --surface-card: rgba(15, 23, 42, 0.40);   /* idle controls */
+  --surface-hover: rgba(30, 41, 59, 0.50);  /* idle controls, hovered */
+  --surface-float: rgba(15, 23, 42, 0.75);  /* floating glass chrome */
+
+  /* ── Lines: slate-700 hairline, plus the glass borders ─────────── */
+  --line: rgba(51, 65, 85, 0.60);
+  --line-glass: rgba(148, 163, 184, 0.15);
+  --line-strong: rgba(148, 163, 184, 0.25);
+
+  /* ── Text ────────────────────────────────────────────────────────── */
+  --text-hi: var(--slate-100);   /* headlines, display copy */
+  --text: var(--slate-300);      /* body, nav */
+  --text-2: var(--slate-400);    /* secondary, links at rest */
+  /* Muted is slate-400 at alpha, the app's textMuted idiom. Solid
      slate-500 reads 3.5:1 on this ground and fails AA for captions. */
   --text-mut: rgba(148, 163, 184, 0.85);
 
-  --accent: var(--color-cyan);           /* active / selected / primary rail */
-  --accent-hi: var(--color-cyan-bright); /* accent text on washed fills */
-  --action: rgba(34, 211, 238, 0.12);    /* primary button wash */
-  --action-hi: rgba(34, 211, 238, 0.22); /* its hover step — same hue, more alpha */
-  --action-line: rgba(34, 211, 238, 0.4);
-  --ok: var(--color-emerald);            /* success readouts */
-  --diagnostic: var(--color-rose);       /* errors, broken rows */
+  /* ── Roles ───────────────────────────────────────────────────────── */
+  --accent: var(--cyan);                  /* active / selected / primary rail */
+  --accent-hi: var(--cyan-300);           /* accent text on washed fills */
+  --action: rgba(34, 211, 238, 0.12);     /* a cyan fill is alpha, never a new hue */
+  --action-hi: rgba(34, 211, 238, 0.22);  /* its hover step: same hue, more alpha */
+  --action-line: rgba(34, 211, 238, 0.40);
+  --ok: var(--emerald);                   /* success readouts */
+  --diagnostic: var(--rose);              /* errors, broken rows */
+  --syntax-key: var(--violet);            /* keys / keywords in code samples */
+  --syntax-val: var(--amber);             /* values / strings in code samples */
 
-  --syntax-key: var(--color-violet);     /* keys / keywords in code mockups */
-  --syntax-val: var(--color-amber);      /* values / strings in code mockups */
-
-  /* ── Type ────────────────────────────────────────────────────────── */
+  /* ── Type: fonts.css ────────────────────────────────────────────────
+     The app ships ONE face: Geist Mono (Fira Code fallback) for all
+     chrome and body text. Chrome pages set themselves in --font-mono.
+     --font-sans is the opt-in reading face for surfaces whose whole job
+     is being read, here the legal and policy documents.               */
   --font-sans: 'Geist', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'Geist Mono', 'Fira Code', 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --font-mono: 'Geist Mono', 'Fira Code', ui-monospace, Consolas, monospace;
 
   --text-caption: 10px;
   --text-label: 11px;
@@ -64,28 +86,42 @@
   --text-body: 14px;
   --text-lede: 16px;
   --text-subheading: 20px;
-  --text-heading-sm: 25px;
+  --text-heading-sm: 24px;
   --text-heading: 36px;
   --text-display: 65px;
 
+  /* Micro-labels: 10px uppercase at tracking >= 0.18em (ui-style-guide rule 3). */
   --track-caption: 0.18em;
   --track-label: 0.14em;
   --track-chrome: 0.1em;
   --track-display: -0.02em;
 
-  /* ── Shape ───────────────────────────────────────────────────────── */
-  --radius: 6px;        /* controls, chips, badges */
-  --radius-lg: 10px;    /* cards, panels, terminal frames */
+  /* ── Shape: glass-morphism.css ──────────────────────────────────── */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --radius: var(--r-sm);        /* controls, chips, badges */
+  --radius-lg: var(--r-lg);     /* cards, panels */
+  --blur-sm: 8px;
+  --blur-md: 12px;
+  --blur-lg: 16px;
+  --blur-xl: 20px;
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --ring-accent: inset 0 0 0 1px rgba(34, 211, 238, 0.35);
   --ring-neutral: inset 0 0 0 1px rgba(148, 163, 184, 0.25);
 
+  /* ── Motion: tokens.ts MOTION ───────────────────────────────────── */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.35s;
+
   /* ── Layout ──────────────────────────────────────────────────────── */
-  --maxw: 1200px;
+  --maxw: 1240px;
   --measure: 66ch;
   --gap-section: 80px;
   --pad-card: 20px;
   --pad-gutter: 24px;
   --gap-element: 12px;
+  --control-line: 38px;         /* FIELD.controlLine */
 
   color-scheme: dark;
 }
@@ -98,16 +134,17 @@ html {
   scroll-padding-top: 88px;
 }
 
-/* Frost atmosphere: the app's canonical backdrop — abyss-to-slate ground
-   with a cyan glow top-left and an indigo glow bottom-right. */
+/* Frost atmosphere: the app's canonical backdrop for reading surfaces,
+   an abyss-to-slate ground with a sky glow top-left and an indigo glow
+   bottom-right. The landing opts out in welcome.css. */
 body {
   margin: 0;
   min-height: 100vh;
   background-color: var(--bg);
   background-image:
-    radial-gradient(circle 640px at 80px 80px, rgba(56, 189, 248, 0.14), transparent 70%),
-    radial-gradient(circle 720px at calc(100% - 90px) calc(100% - 90px), rgba(99, 102, 241, 0.12), transparent 70%),
-    linear-gradient(180deg, var(--color-abyss) 0%, var(--color-deep-slate) 100%);
+    radial-gradient(circle 640px at 80px 80px, color-mix(in srgb, var(--sky) 14%, transparent), transparent 70%),
+    radial-gradient(circle 720px at calc(100% - 90px) calc(100% - 90px), color-mix(in srgb, var(--indigo) 12%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 100%);
   background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
@@ -117,7 +154,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* The 48px grid, at whisper opacity — same as the app's <FrostAtmosphere />. */
+/* The 48px grid, at whisper opacity, same as the app's <FrostAtmosphere />. */
 body::before {
   content: "";
   position: fixed;
@@ -130,20 +167,21 @@ body::before {
   z-index: -1;
 }
 
-/* Mono is system chrome, not code — the ligature grid stays rigid. */
+/* Mono is system chrome, not code: the ligature grid stays rigid. */
 code, kbd, samp, pre, .mono {
   font-family: var(--font-mono);
   font-feature-settings: 'calt' 0;
   font-variant-ligatures: none;
 }
 
-/* Titles are semibold slate-100 — hierarchy from weight and size, like
+/* Titles are semibold slate-100: hierarchy from weight and size, like
    the app. Strong carries medium weight in running copy. */
 h1, h2, h3, h4, h5, h6 { font-weight: 600; }
 strong, b { font-weight: 500; color: var(--text-hi); }
 
 ::selection { background: rgba(34, 211, 238, 0.28); color: var(--text-hi); }
 
+/* Rule 7: every interactive element gets a focus ring. */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;

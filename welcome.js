@@ -1,7 +1,9 @@
-/* WoW Toolbox · welcome page
-   Fetches latest GitHub release and populates the download CTA + meta strip.
-   Fails silently into a "view releases" fallback so the page works before
-   any build has been published. */
+/* WoW Toolbox · landing page
+   Fetches the latest GitHub release and fills the download buttons, the
+   release readout and the status pill. Fails quietly into a "view releases"
+   fallback so the page works before any build has been published. The tool
+   index prints the selected tool's one-line brief. The live changelog feed
+   is its own script: changelog.js. */
 
 (() => {
   const REPO = 'Isidorsson/wow-toolbox';
@@ -16,25 +18,22 @@
     largeCta:       $('#cta-download-large'),
     largeLabel:     $('#cta-label-large'),
     largeDetail:    $('#cta-detail-large'),
+    notesLink:      $('#release-notes-link'),
     downloadTag:    $('#download-tag'),
     downloadState:  $('#download-state'),
-    releaseMeta:    $('#release-meta'),
   };
 
-  const field = (name) =>
-    ui.releaseMeta?.querySelector(`[data-field="${name}"]`) ?? null;
-
   const formatSize = (bytes) => {
-    if (!bytes || !Number.isFinite(bytes)) return '—';
+    if (!bytes || !Number.isFinite(bytes)) return 'n/a';
     const mb = bytes / (1024 * 1024);
     return mb >= 1 ? `${mb.toFixed(1)} MB` : `${Math.round(bytes / 1024)} KB`;
   };
 
   const formatDate = (iso) => {
-    if (!iso) return '—';
+    if (!iso) return 'n/a';
     const d = new Date(iso);
     return Number.isNaN(d.getTime())
-      ? '—'
+      ? 'n/a'
       : d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
@@ -59,12 +58,30 @@
     );
   };
 
+  // URLs from the API land in href attributes, so only https survives.
+  const safeUrl = (url, fallback) => {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'https:' ? parsed.href : fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
+  // Release facts show in the readout and the status pill: one name, many places.
   const setField = (name, value) => {
-    const el = field(name);
-    if (el) el.textContent = value;
+    document.querySelectorAll(`[data-field="${name}"]`).forEach((el) => {
+      el.textContent = value;
+    });
+  };
+
+  // CSS keys the release LEDs off this: absent while checking, then ready or none.
+  const setReleaseState = (state) => {
+    document.documentElement.dataset.release = state;
   };
 
   const showNoRelease = (reason) => {
+    setReleaseState('none');
     if (ui.ctaVersion) ui.ctaVersion.textContent = 'no builds yet';
     if (ui.ctaDownload) {
       ui.ctaDownload.href = REPO_RELEASES;
@@ -74,37 +91,41 @@
     if (ui.largeLabel)  ui.largeLabel.textContent  = 'View on GitHub';
     if (ui.largeDetail) ui.largeDetail.textContent = `github.com/${REPO}`;
     if (ui.largeCta)    ui.largeCta.href = REPO_RELEASES;
+    if (ui.notesLink)   ui.notesLink.href = REPO_RELEASES;
     if (ui.downloadTag) {
       ui.downloadTag.textContent = reason
         ? `No build published yet · ${reason}`
-        : 'No build published yet — star the repo to get notified when the first release ships.';
+        : 'No build published yet. Star the repo to get notified when the first release ships.';
     }
-    if (ui.downloadState) ui.downloadState.textContent = "No build yet";
+    if (ui.downloadState) ui.downloadState.textContent = 'No build yet';
     setField('version', 'pending');
-    setField('size', '—');
-    setField('date', '—');
+    setField('size', 'n/a');
+    setField('date', 'n/a');
   };
 
   const applyRelease = (rel) => {
     const asset   = pickAsset(rel.assets);
     const version = rel.tag_name || rel.name || 'latest';
-    const size    = asset ? formatSize(asset.size) : '—';
+    const size    = asset ? formatSize(asset.size) : 'n/a';
     const date    = formatDate(rel.published_at);
-    const dlUrl   = asset?.browser_download_url || rel.html_url || REPO_RELEASES;
+    const dlUrl   = safeUrl(asset?.browser_download_url || rel.html_url, REPO_RELEASES);
     const plat    = asset ? platformFromAsset(asset.name) : 'Win x64';
 
-    if (ui.ctaVersion) ui.ctaVersion.textContent = version;
+    setReleaseState('ready');
+
+    if (ui.ctaVersion) ui.ctaVersion.textContent = `${version} · ${size}`;
     if (ui.ctaDownload) ui.ctaDownload.href = dlUrl;
 
     if (ui.largeLabel)  ui.largeLabel.textContent  = `Download ${version}`;
-    if (ui.largeDetail) ui.largeDetail.textContent = asset?.name || 'from GitHub releases';
+    if (ui.largeDetail) ui.largeDetail.textContent = size;
     if (ui.largeCta)    ui.largeCta.href = dlUrl;
+    if (ui.notesLink)   ui.notesLink.href = safeUrl(rel.html_url, REPO_RELEASES);
 
-    if (ui.downloadState) ui.downloadState.textContent = "Ready";
-    const assetCount = rel.assets?.length ?? 0;
+    if (ui.downloadState) ui.downloadState.textContent = 'Ready';
     if (ui.downloadTag) {
-      ui.downloadTag.textContent =
-        `Published ${date} · ${size} · ${assetCount} asset${assetCount === 1 ? '' : 's'}`;
+      ui.downloadTag.textContent = asset
+        ? `${asset.name} · published ${date}`
+        : `Published ${date}`;
     }
 
     setField('version', version);
@@ -124,81 +145,29 @@
       const reason = err?.message === 'no-release' ? null : 'GitHub API unreachable';
       showNoRelease(reason);
     });
-
-  // Delivery tile: swap the mocked version rows for the three most recent
-  // releases. Stays on the mockup if the API is unreachable or empty.
-  const deliveryRows = document.querySelectorAll('#delivery-tile .tile__row[data-release]');
-  if (deliveryRows.length) {
-    fetch(`https://api.github.com/repos/${REPO}/releases?per_page=${deliveryRows.length}`, {
-      headers: { Accept: 'application/vnd.github+json' },
-    })
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`http-${res.status}`))))
-      .then((list) => {
-        if (!Array.isArray(list) || list.length === 0) return;
-        deliveryRows.forEach((row, i) => {
-          const rel = list[i];
-          if (!rel) { row.hidden = true; return; }
-          const label = row.querySelector('span');
-          const state = row.querySelector('b');
-          if (label) label.textContent = rel.tag_name || rel.name || '—';
-          if (state) state.textContent = i === 0 ? 'shipped' : 'archived';
-        });
-      })
-      .catch(() => { /* keep the static mockup */ });
-  }
 })();
 
-/* Hero terminal tabs — one tab stop, arrows move the selection. */
-(() => {
-  const tablist = document.querySelector('.term__tabs[role="tablist"]');
-  if (!tablist) return;
-  const tabs = [...tablist.querySelectorAll('[role="tab"]')];
-
-  const select = (tab, focus = true) => {
-    tabs.forEach((t) => {
-      const on = t === tab;
-      t.classList.toggle('is-on', on);
-      t.setAttribute('aria-selected', String(on));
-      t.tabIndex = on ? 0 : -1;
-      const panel = document.getElementById(t.getAttribute('aria-controls'));
-      if (panel) panel.hidden = !on;
-    });
-    if (focus) tab.focus();
-  };
-
-  tabs.forEach((tab) => tab.addEventListener('click', () => select(tab, false)));
-
-  tablist.addEventListener('keydown', (e) => {
-    const i = tabs.indexOf(document.activeElement);
-    if (i === -1) return;
-    let next = null;
-    if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
-    if (e.key === 'ArrowLeft')  next = tabs[(i - 1 + tabs.length) % tabs.length];
-    if (e.key === 'Home')       next = tabs[0];
-    if (e.key === 'End')        next = tabs[tabs.length - 1];
-    if (next) { e.preventDefault(); select(next); }
-  });
-})();
-
-/* Tool index — selecting a tool prints its one-line brief in the readout. */
+/* Tool index: selecting a tool prints its one-line brief in the readout. */
 (() => {
   const index = document.getElementById('tool-index');
   const note = document.getElementById('index-note');
   if (!index || !note) return;
 
   index.addEventListener('click', (e) => {
-    const btn = e.target.closest('.index__btn');
+    const btn = e.target instanceof Element ? e.target.closest('.index__btn') : null;
     if (!btn) return;
-    index.querySelectorAll('li.is-on').forEach((li) => li.classList.remove('is-on'));
-    btn.closest('li')?.classList.add('is-on');
-    note.innerHTML = '';
+
+    index.querySelectorAll('[aria-pressed="true"]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    btn.setAttribute('aria-pressed', 'true');
+
     const prompt = document.createElement('b');
     prompt.textContent = '>';
+    prompt.setAttribute('aria-hidden', 'true');
     const name = document.createElement('span');
     name.className = 'index__note-name';
-    name.textContent = `${btn.textContent.trim()} `;
+    name.textContent = btn.textContent.trim();
     const desc = document.createElement('span');
-    desc.textContent = `— ${btn.dataset.note}`;
-    note.append(prompt, ' ', name, desc);
+    desc.textContent = btn.dataset.note ?? '';
+    note.replaceChildren(prompt, ' ', name, desc);
   });
 })();
